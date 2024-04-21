@@ -8,12 +8,16 @@ export const UserDataContext = createContext()
 // Create provider
 
 export function UserDataProvider ({ children }) {
-  const [userData, setUserData] = useState('')
+  const [userData, setUserData] = useState({})
   const [userInfo, setUserInfo] = useState({})
+  const [loginWindowActive, setloginWindowActive] = useState(false)
+
   const handleSubmitLogin = async (event, username, password) => {
     event.preventDefault()
     const response = await login(username.current.value, password.current.value)
     setUserData(response)
+    console.log(response)
+    setloginWindowActive(false)
   }
   return (
     <UserDataContext.Provider value={{
@@ -21,7 +25,9 @@ export function UserDataProvider ({ children }) {
       setUserData,
       handleSubmitLogin,
       userInfo,
-      setUserInfo
+      setUserInfo,
+      loginWindowActive,
+      setloginWindowActive
     }}
     >
       {children}

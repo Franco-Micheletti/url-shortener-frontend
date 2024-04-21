@@ -1,13 +1,13 @@
 import { ShortUrlResult } from './shortUrlResult'
 import { ShortUrlContext } from '../context/shortUrlContext'
-import { useContext, useState, useRef } from 'react'
+import { useContext, useEffect, useRef } from 'react'
 import { LoginWindow } from './loginWindow'
 import { UserDataContext } from '../context/userDataContext'
 import { Link } from 'react-router-dom'
+
 export function Home () {
-  const { shortUrl, handleSubmit } = useContext(ShortUrlContext)
-  const { userData } = useContext(UserDataContext)
-  const [loginWindowActive, setloginWindowActive] = useState(false)
+  const { shortUrl, handleSubmit, validationError } = useContext(ShortUrlContext)
+  const { userData, loginWindowActive, setloginWindowActive } = useContext(UserDataContext)
   const loginOverlay = useRef()
 
   const closeLoginWindow = (e) => {
@@ -28,16 +28,18 @@ export function Home () {
     <div className='bg-slate-200 justify-center flex flex-col'>
       {
         loginWindowActive
-          ? <div>
-            <div ref={loginOverlay} className='flex bg-black/60 justify-center w-screen h-screen content-center z-10 absolute'>
-              <LoginWindow />
+          ? (
+            <div>
+              <div ref={loginOverlay} className='flex bg-black/60 justify-center w-screen h-screen content-center z-10 absolute'>
+                <LoginWindow />
+              </div>
             </div>
-          </div>
+            )
           : <></>
       }
       <header>
         {
-          userData
+          userData.access_token
             ? (
               <div className='flex justify-end p-4 text-sm font-medium text-cyan-800'>
                 <Link to='/account'>
@@ -70,15 +72,27 @@ export function Home () {
         {
           shortUrl !== ''
             ? <ShortUrlResult />
-            : <div className='flex justify-center'>
-              <form className='flex justify-center w-2/3' onSubmit={handleSubmit}>
-                <input name='longUrl' type='text' className='border p-5 rounded-md outline-none w-full' placeholder='Insert a URL to be shorten' />
-              </form>
+            : (
+              <div className='flex justify-center'>
+                <form className='flex justify-center w-2/3 flex-col gap-4' onSubmit={handleSubmit}>
+                  <input name='longUrl' type='text' className='border p-5 rounded-md outline-none w-full' placeholder='Insert a URL to be shorten' />
+                  {
+                    validationError
+                      ? (
+                        <div className='text-red-500 flex justify-center text-2xl rounded p-2 flex-col gap-4'>
+                          <div>URL is not valid</div>
+                          <div>Make sure that the URL have this format: https://www.google.com/</div>
+                        </div>
+                        )
+                      : <></>
+                  }
+                </form>
               </div>
+              )
         }
       </div>
       <footer>
-        <div className='bottom-0 font-medium text-3xl text-sky-800 absolute bg-white flex h-36 text-center w-screen flex-col justify-center'>
+        <div className='bottom-0 font-medium text-1xl text-sky-800 absolute bg-white flex h-24 text-center w-screen flex-col justify-center'>
           <p>Developed by Franco Micheletti</p>
         </div>
       </footer>
