@@ -10,6 +10,5 @@ export const createShortUrl = async (longUrl) => {
       long_url: longUrl
     })
   })
-  const json = await response.json()
-  return json
+  return response
 }

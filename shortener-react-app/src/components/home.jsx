@@ -86,6 +86,11 @@ export function Home () {
                         )
                       : <></>
                   }
+                  {
+                    shortUrl !== '' && shortUrl.error
+                      ? <div className='text-red-500 flex justify-center text-2xl rounded p-2'>{shortUrl.error}</div>
+                      : <></>
+                  }
                 </form>
               </div>
               )
