@@ -16,7 +16,6 @@ export function PersistLogin () {
     }
 
     !userData.jwt_access ? handleGetNewAccessToken() : setLoading(false)
-    console.log(userData)
 
     return () => {
       isMounted = false
