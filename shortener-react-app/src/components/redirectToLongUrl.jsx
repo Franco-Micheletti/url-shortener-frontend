@@ -1,12 +1,7 @@
 import { getLongUrl } from '../api/getLongUrl'
 import { useParams } from 'react-router-dom'
 import { useEffect } from 'react'
-/**
- * Does something nifty.
- *
- *
- * @returns A useful value.
- */
+
 export function RedirectToLongUrl () {
   const shortUrl = useParams()
   useEffect(() => {

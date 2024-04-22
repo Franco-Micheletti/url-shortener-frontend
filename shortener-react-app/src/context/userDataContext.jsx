@@ -16,7 +16,6 @@ export function UserDataProvider ({ children }) {
     event.preventDefault()
     const response = await login(username.current.value, password.current.value)
     setUserData(response)
-    console.log(response)
     setloginWindowActive(false)
   }
   return (
