@@ -1,5 +1,5 @@
 export const getUserInfo = async () => {
-  const url = 'http://127.0.0.1:8000/user/'
+  const url = import.meta.env.PRODUCTION ? `${import.meta.env.BACKEND_URL}/user/` : 'http://127.0.0.1:8000/user/'
   const response = await fetch(`${url}`, {
     method: 'GET',
     credentials: 'include',
