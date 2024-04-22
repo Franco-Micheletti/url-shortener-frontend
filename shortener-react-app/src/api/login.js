@@ -1,5 +1,5 @@
 export const login = async (username, password) => {
-  const url = import.meta.env.VITE_PRODUCTION ? `${import.meta.env.VITE_BACKEND_URL}/login/` : 'http://127.0.0.1:8000/login/'
+  const url = import.meta.env.VITE_PRODUCTION ? `https://${import.meta.env.VITE_BACKEND_URL}/login/` : 'http://127.0.0.1:8000/login/'
   const response = await fetch(`${url}`, {
     method: 'POST',
     credentials: 'include',
